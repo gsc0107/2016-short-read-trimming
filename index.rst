@@ -12,6 +12,9 @@ Short read quality evaluation and trimming
    1-getting-started
    2-background
    3-fastqc-evaluation
+   4-trimming
+   5-read-mismatch-evaluation
+   6-final-thoughts
 
 Indices and tables
 ==================
