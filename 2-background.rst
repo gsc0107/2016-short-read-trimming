@@ -18,7 +18,13 @@ This will eliminate newly-useless reads that might mismap.
 * for RNAseq assembly, trim lightly
 * for variant calling, trim stringently
 
-...unless otherwise indicated.
+...unless otherwise indicated, or if you have biological reasons otherwise.
+
+The basic logic is that *stringent trimming* can remove lots of *good*
+sequence:
+
+.. thumbnail:: images/stringent-trimming.png
+   :width: 20%
 
 .. @@ Discuss stuff with RNA editing.
 .. @@ Discuss MacManes results
@@ -27,6 +33,9 @@ This will eliminate newly-useless reads that might mismap.
 
 Structure of a FASTQ file
 -------------------------
+
+.. thumbnail:: images/paired-reads.png
+   :width: 20%
 
 Paired / split, paired interleaved
 
