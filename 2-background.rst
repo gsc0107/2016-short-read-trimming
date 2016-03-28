@@ -11,7 +11,7 @@ Basic Recommendations:
 
 Always adapter trim! It doesn't do any harm.
 
-Impose a length filter to throw away short sequenes - something like 25-50.
+Impose a length filter to throw away short sequences - something like 25-50.
 This will eliminate newly-useless reads that might mismap.
 
 * for quantification (RNAseq), trim lightly
