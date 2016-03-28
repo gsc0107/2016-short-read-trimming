@@ -17,7 +17,13 @@ Software we'll be using on the server
 A first test
 ------------
 
-Go to New... Terminal... and copy/paste this text into it::
+Click here:
+
+.. image:: http://mybinder.org/badge.svg
+   :target: http://mybinder.org/repo/ngs-docs/2016-short-read-trimming
+
+Once you're at the console, go to New... Terminal... and copy/paste
+this text into it::
 
   echo hello, world
 
