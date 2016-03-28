@@ -4,11 +4,16 @@ import argparse
 import screed
 import math
 
+
+MAX_SEQ_LEN = 5000
+
+
 def ignore_at(iter):
     for item in iter:
         if item.startswith('@'):
             continue
         yield item
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -16,16 +21,17 @@ def main():
     parser.add_argument('samfile')
     parser.add_argument('-o', '--outfile', type=argparse.FileType('w'),
                         default=sys.stdout)
-
+    
     args = parser.parse_args()
 
     genome_dict = dict([ (record.name.split()[0], record.sequence) for record in \
                         screed.open(args.genome) ])
 
-    n = 0
-    n_skipped = 0
-    n_rev = n_fwd = 0
+    positions = [0] * MAX_SEQ_LEN
+    lengths = []
 
+    n = 0
+    n_rev = n_fwd = 0
     for samline in ignore_at(open(args.samfile)):
         n += 1
         if n % 100000 == 0:
@@ -33,17 +39,14 @@ def main():
 
         readname, flags, refname, refpos, _, _, _, _, _, seq = \
                   samline.split('\t')[:10]
+
         if refname == '*' or refpos == '*':
             # (don't count these as skipped)
             continue
         
         refpos = int(refpos)
-        try:
-            ref = genome_dict[refname][refpos-1:refpos+len(seq) - 1]
-        except KeyError:
-            print >>sys.stderr, "unknown refname: %s; ignoring (read %s)" % (refname, readname)
-            n_skipped += 1
-            continue
+
+        ref = genome_dict[refname][refpos-1:refpos+len(seq) - 1]
 
         errors = []
         for pos, (a, b) in enumerate(zip(ref, seq)):
@@ -54,18 +57,25 @@ def main():
                     n_rev += 1
                 else:
                     n_fwd += 1
-                errors.append(pos)
+                positions[pos] += 1
+        lengths.append(len(seq))
 
-        print >>args.outfile, readname, ",".join(map(str, errors))
+    # normalize for length
+    lengths.sort()
+    max_length = lengths[-1]
 
-    # avoid log errors via pseudocount
-    n_fwd += 1
-    n_rev += 1
-    
+    length_count = [0]*max_length
+    for j in range(max_length):
+        length_count[j] = sum([1 for i in lengths if i >= j])
+
+    # write!
+    args.outfile.write('position error_count error_fraction\n')
+    for n, i in enumerate(positions[:max_length]):
+        print >>args.outfile, n, i, float(i) / float(length_count[n])
+
+    print >>sys.stderr, "error rate: %.2f%%" % \
+          (100.0 * sum(positions) / float(sum(lengths)))
     print >>sys.stderr, 'logratio of fwd to rev: %.2f' % (math.log(n_fwd / float(n_rev), 2))
-    if n_skipped / float(n) > .01:
-        raise Exception, "Error: too many reads ignored! %d of %d" % \
-              (n_skipped, n)
 
 if __name__ == '__main__':
     main()
