@@ -4,6 +4,8 @@ import screed
 import khmer
 import argparse
 
+MAX_SEQ_LEN = 5000
+
 
 def add_n_posns(posns, sequence):
     loc = sequence.find('N')
@@ -28,9 +30,12 @@ def main():
 
     args = parser.parse_args()
 
-    kh = khmer.load_counting_hash(args.table)
+    kh = khmer.load_countgraph(args.table)
     n_skipped_variable = 0
     n_total = 0
+
+    positions = [0] * MAX_SEQ_LEN
+    lengths = []
 
     print >>sys.stderr, "K:", kh.ksize()
     print >>sys.stderr, "CUTOFF:", args.cutoff
@@ -54,17 +59,29 @@ def main():
                 varskip = True
                 n_skipped_variable += 1
             
-        if varskip:
-            print >>args.outfile, record.name, 'V'
-        else:
+        if not varskip:
             posns = kh.find_spectral_error_positions(seq, args.cutoff)
-            posns = add_n_posns(posns, record.sequence)
-            print >>args.outfile, record.name, ",".join(map(str, posns))
-
+            for p in posns:
+                positions[p] += 1
+            lengths.append(len(seq))
 
     if args.variable:
         sys.stderr.write('Skipped %d reads of %d total due to -V\n' % \
                          (n_skipped_variable, n_total))
+
+    # normalize for length
+    lengths.sort()
+    max_length = lengths[-1]
+
+    length_count = [0]*max_length
+    for j in range(max_length):
+        length_count[j] = sum([1 for i in lengths if i >= j])
+
+    # write!
+    args.outfile.write('position error_count error_fraction\n')
+    for n, i in enumerate(positions[:max_length]):
+        print >>args.outfile, n, i, float(i) / float(length_count[n])
+        
 
 if __name__ == '__main__':
    main()
