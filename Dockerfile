@@ -19,7 +19,11 @@ RUN cd /home && \
     python setup.py install && \
     rm -fr build
 
-ENV PATH ${PATH}:/home/FastQC
+RUN cd /home && \
+    curl -L https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.8/bowtie2-2.2.8-linux-x86_64.zip/download > bowtie2-2.2.8.zip && \
+    unzip bowtie2-2.2.8.zip
+
+ENV PATH ${PATH}:/home/FastQC:/home/bowtie2-2.2.8
 
 #USER main
 
