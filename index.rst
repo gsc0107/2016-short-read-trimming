@@ -6,6 +6,10 @@
 Short read quality evaluation and trimming
 ==========================================
 
+`Etherpad here <https://etherpad.wikimedia.org/p/2016-03-28-short-read-trim-qual>`__
+
+`GitHub Repo here <https://github.com/ngs-docs/2016-short-read-trimming>`__
+
 .. toctree::
    :maxdepth: 2
 

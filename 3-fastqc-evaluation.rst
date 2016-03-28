@@ -4,7 +4,7 @@ Evaluating samples with FastQC
 Download some data
 ------------------
 
-Let's grab some E. coli genomic data from @@::
+Let's grab some E. coli genomic data from `Chitsaz et al <http://bix.ucsd.edu/projects/singlecell>`__::
   
    cd ~/notebooks
    mkdir ecoli
@@ -52,14 +52,24 @@ You can run fastqc on all four of these files like so::
   cd ~/notebooks/yeast
   fastqc yeast-rnaseq-R1.fastq.gz
   fastqc yeast-rnaseq-R2.fastq.gz
-  
+
+To look at the report, you can download the resulting zip files
+through the console, unpack the zip file, and open the
+fastqc_report.html in a browser.  You can *also* click on the
+fastqc report HTML file in the console, and then change the URL from
+'edit' to 'files'.
 
 Observations:
-* RNAseq has weird first 10 bp. This is not errors but instead due to random
-  priming.
-* Sequence duplication levels may be "high" for high-coverage RNAseq.
-* All sequences have the same length pre-trim; this is how Illumina does it.
-* R1 is always worse than R2.
 
+* RNAseq has biases in its first 10 bp. This is not from errors but
+  instead due to random priming.
+  
+* Sequence duplication levels may be "high" for high-coverage RNAseq
+  (not shown here)
+  
+* All sequences have the same length pre-trim; this is how Illumina
+  produces data, and it's one reason why trimming is important.
+  
+* R1 is always better than R2.
 
 Next: :doc:`4-trimming`

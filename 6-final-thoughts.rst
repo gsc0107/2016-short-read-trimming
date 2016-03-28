@@ -4,6 +4,19 @@ Final thoughts on short-read trimming
 A summary of recommendations
 ----------------------------
 
+* Run FastQC before trimming; trim; look again.
+* Always trim paired sequences together.
+* Always adapter trim!
+* Impose a length filter, 50.
+* for quantification (RNAseq), trim lightly
+* for RNAseq assembly, trim lightly
+* for variant calling, trim stringently
+* use the same trimming parameters on all your data unless you have a VERY
+  good reason otherwise!
+* ignore the first 10 bp composition bias in RNAseq;
+* ignore sequence duplication levels in high-coverage RNAseq;
+* look at your read positional bias with mapping (or de novo) as well;
+
 Some references
 ---------------
 

@@ -1,6 +1,10 @@
 Trimming reads with Trimmomatic
 ###############################
 
+Note: the `trimmomatic manual
+<http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf>`__
+is the go-to-guide for parameters and commands.
+
 E. coli trimming
 ----------------
 
@@ -15,7 +19,7 @@ Trim the E. coli data lightly::
      ILLUMINACLIP:/home/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:40:15 \
      LEADING:2 TRAILING:2 \
      SLIDINGWINDOW:4:2 \
-     MINLEN:25
+     MINLEN:50
 
 You should see::
 
@@ -29,7 +33,7 @@ Trim the E. coli data stringently::
      ILLUMINACLIP:/home/Trimmomatic-0.36/adapters/TruSeq3-PE.fa:2:40:15 \
      LEADING:2 TRAILING:2 \
      SLIDINGWINDOW:4:20 \
-     MINLEN:25
+     MINLEN:50
 
 You should see::
 

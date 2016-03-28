@@ -4,15 +4,21 @@ Getting started
 Local installs and Web site
 ---------------------------
 
-* make sure you have chrome
+* make sure you are using the latest version of Google Chrome
+* here is `an etherpad link for copy/paste <https://etherpad.wikimedia.org/p/2016-03-28-short-read-trim-qual>`__
 
 Software we'll be using on the server
 -------------------------------------
 
-* Trimmomatic
-* FastQC
-* khmer
-* a few custom scripts
+* `Trimmomatic <http://www.usadellab.org/cms/?page=trimmomatic>`__
+* `FastQC <http://www.bioinformatics.babraham.ac.uk/projects/fastqc/>`__
+* `khmer <https://khmer.readthedocs.org/en/v2.0/>`__
+* `bowtie2 <http://bowtie-bio.sourceforge.net/bowtie2/index.shtml>`__
+* a few custom scripts in the `workshop repository <https://github.com/ngs-docs/2016-short-read-trimming>`__
+
+The `Dockerfile
+<https://github.com/ngs-docs/2016-short-read-trimming/blob/master/Dockerfile>`__
+shows the basic installation instructions for an Ubuntu machine.
 
 A first test
 ------------
