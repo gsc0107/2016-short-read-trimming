@@ -19,7 +19,7 @@ def main():
 
     args = parser.parse_args()
 
-    genome_dict = dict([ (record.name, record.sequence) for record in \
+    genome_dict = dict([ (record.name.split()[0], record.sequence) for record in \
                         screed.open(args.genome) ])
 
     n = 0
